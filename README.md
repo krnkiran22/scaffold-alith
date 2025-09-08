@@ -10,7 +10,17 @@ A modern React chat interface powered by the Alith AI agent with Groq integratio
 - ⚡ Fast development with Vite
 - 🔄 Concurrent frontend and backend development
 
-## Quick Start
+## Quick Start (Recommended)
+
+Create a new Alith app with a single command:
+
+```bash
+npx create-alith-app my-alith-app
+cd my-alith-app
+npm run dev
+```
+
+## Manual Installation
 
 1. **Clone and install dependencies:**
 
