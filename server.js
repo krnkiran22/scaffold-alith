@@ -10,7 +10,7 @@ const port = 3001;
 
 // Initialize Alith agent
 const agent = new Agent({
-  model: "llama3-70b-8192",
+  model: "llama-3.3-70b-versatile",
   apiKey: process.env.GROQ_API_KEY,
   baseUrl: "https://api.groq.com/openai/v1",
 });
