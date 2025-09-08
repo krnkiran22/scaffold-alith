@@ -109,38 +109,33 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
 
         {/* Messages Area */}
         <div id="messages-container" className="flex-1 overflow-y-auto p-6 bg-gray-50">
-          <div className="space-y-6">
-            {/* Initial Bot Message with Avatar */}
-            <div className="flex justify-start items-start space-x-3">
-              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" />
-                </svg>
-              </div>
-              <div className="bg-white rounded-2xl px-5 py-4 shadow-sm border border-gray-200 max-w-sm">
-                <p className="text-gray-800 text-sm mb-3">
+          <div className="space-y-4">
+            {/* Initial Bot Message */}
+            <div className="flex justify-start">
+              <div className="bg-white rounded-2xl px-4 py-3 shadow-sm border border-gray-200 max-w-sm">
+                <p className="text-gray-800 text-sm mb-2">
                   <span className="font-semibold text-gray-800">Hello! I'm Alith AI Assistant</span><br />
                   I'm here to provide intelligent assistance and guidance. How can I help you today?
                 </p>
-                <p className="text-gray-600 text-sm mb-4">
+                <p className="text-gray-600 text-sm mb-3">
                   Choose one of these options or type your question below:
                 </p>
 
                 {/* Quick Action Buttons */}
-                <div className="grid grid-cols-2 gap-2 mb-4">
-                  <button className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-xs text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2">
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <button className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2">
                     <span>💡</span>
                     <span>General Help</span>
                   </button>
-                  <button className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-xs text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2">
+                  <button className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2">
                     <span>📅</span>
                     <span>Schedule</span>
                   </button>
-                  <button className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-xs text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2">
+                  <button className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2">
                     <span>🎯</span>
                     <span>Features</span>
                   </button>
-                  <button className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-xs text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2">
+                  <button className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 hover:bg-gray-100 transition-colors flex items-center space-x-2">
                     <span>🔧</span>
                     <span>Support</span>
                   </button>
@@ -160,21 +155,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
 
             {/* Dynamic Messages */}
             {messages.slice(1).map((message) => (
-              <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start items-start space-x-3'}`}>
-                {message.sender === 'bot' && (
-                  <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" />
-                    </svg>
-                  </div>
-                )}
-                <div className={`max-w-sm px-5 py-3 rounded-2xl shadow-sm ${
+              <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-sm px-4 py-2 rounded-2xl shadow-sm ${
                   message.sender === 'user'
                     ? 'bg-gray-800 text-white border-0'
                     : 'bg-white text-gray-800 border border-gray-200'
                 }`}>
                   <p className="text-sm leading-relaxed">{message.text}</p>
-                  <p className={`text-xs mt-2 ${
+                  <p className={`text-xs mt-1 ${
                     message.sender === 'user' ? 'text-gray-300' : 'text-gray-500'
                   }`}>
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -185,13 +173,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
 
             {/* Typing Indicator */}
             {isTyping && (
-              <div className="flex justify-start items-start space-x-3">
-                <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" />
-                  </svg>
-                </div>
-                <div className="bg-white px-5 py-4 rounded-2xl shadow-sm border border-gray-200">
+              <div className="flex justify-start">
+                <div className="bg-white px-4 py-3 rounded-2xl shadow-sm border border-gray-200">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
