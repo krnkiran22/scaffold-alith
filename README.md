@@ -1,69 +1,83 @@
-# React + TypeScript + Vite
+# Alith AI Chat Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React chat interface powered by the Alith AI agent with Groq integration.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🤖 Real-time AI chat using Alith agent
+- 📱 Responsive design for all devices
+- 🎨 Clean, modern UI with Tailwind CSS
+- ⚡ Fast development with Vite
+- 🔄 Concurrent frontend and backend development
 
-## Expanding the ESLint configuration
+## Quick Start
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Clone and install dependencies:**
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+   ```bash
+   git clone <repository-url>
+   cd alith-app
+   npm install
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+2. **Set up environment variables:**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   ```bash
+   cp .env.example .env
+   ```
+
+   Edit `.env` and add your Groq API key:
+
+   ```
+   GROQ_API_KEY=your_actual_groq_api_key_here
+   ```
+
+3. **Start the application:**
+
+   ```bash
+   npm run dev
+   ```
+
+   This will start both the frontend (React) and backend (Alith AI server) concurrently:
+
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:3001
+
+## Project Structure
+
+```
+alith-app/
+├── src/
+│   ├── components/
+│   │   └── ChatInterface.tsx    # Main chat component
+│   ├── App.tsx                  # Main app component
+│   └── main.tsx                 # App entry point
+├── server.js                    # Alith AI backend server
+├── .env.example                 # Environment template
+└── package.json                 # Dependencies and scripts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Available Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `npm run dev` - Start both frontend and backend
+- `npm run frontend` - Start only the React frontend
+- `npm run server` - Start only the Alith AI backend
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Getting a Groq API Key
+
+1. Go to [Groq Console](https://console.groq.com/keys)
+2. Sign up or log in
+3. Create a new API key
+4. Copy the key to your `.env` file
+
+## Tech Stack
+
+- **Frontend:** React 19, TypeScript, Tailwind CSS, Vite
+- **Backend:** Node.js, Express, Alith AI Agent
+- **AI Model:** Llama 3.3 70B (via Groq)
+
+## License
+
+This project is licensed under the MIT License.
