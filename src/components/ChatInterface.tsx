@@ -12,11 +12,34 @@ interface ChatInterfaceProps {
   onClose: () => void;
 }
 
+// Browser-compatible function that calls our local Alith server
+const getAlithResponse = async (message: string): Promise<string> => {
+  try {
+    const response = await fetch('http://localhost:3001/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.response || 'No response received';
+  } catch (error) {
+    console.error('Error calling Alith server:', error);
+    throw error;
+  }
+};
+
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hello! I'm your AI therapy assistant. How can I help you today?",
+      text: "Hello! I'm Alith AI Assistant. How can I help you today?",
       sender: 'bot',
       timestamp: new Date()
     }
@@ -47,28 +70,33 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
     setInputMessage('');
     setIsTyping(true);
 
-    // Simulate AI response with mock data
-    setTimeout(() => {
-      const mockResponses = [
-        "Thank you for sharing that with me. Can you tell me more about how you're feeling?",
-        "That sounds challenging. What coping strategies have you tried before?",
-        "I understand. It's completely normal to feel that way. Would you like to explore some mindfulness techniques?",
-        "Your feelings are valid. Let's work through this together. What would be most helpful for you right now?",
-        "I'm here to support you. Can you describe what's been weighing on your mind lately?"
-      ];
-
-      const randomResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+    try {
+      // Use Alith server for AI response
+      const aiResponse = await getAlithResponse(currentInput);
       
       const botResponse: Message = {
         id: Date.now() + 1,
-        text: randomResponse,
+        text: aiResponse,
         sender: 'bot',
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, botResponse]);
       setIsTyping(false);
-    }, 1500);
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      
+      // Fallback response if AI fails
+      const fallbackResponse: Message = {
+        id: Date.now() + 1,
+        text: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment.",
+        sender: 'bot',
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, fallbackResponse]);
+      setIsTyping(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -88,7 +116,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
         <div className="bg-gray-800 p-4 sm:p-6 flex justify-between items-center">
           <div className="flex items-center">
             <div>
-              <h3 className="text-lg sm:text-xl font-bold text-white">AI Assistant</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-white">Alith AI</h3>
+              <p className="text-gray-300 text-xs sm:text-sm">AI Assistant</p>
             </div>
           </div>
           <button
